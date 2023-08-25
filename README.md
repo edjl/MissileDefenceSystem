@@ -1,2 +1,2 @@
-# MissileDefenceSystem
-This application simulates a missile defence system, with visuals.
+# MissileDefenseSystem
+This application simulates a missile defense system, with visuals.
