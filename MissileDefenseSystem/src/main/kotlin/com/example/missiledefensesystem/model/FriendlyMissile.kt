@@ -1,6 +1,9 @@
 package com.example.missiledefensesystem.model
 
-class FriendlyMissile(private val source: Interceptor, private val target: EnemyMissile) {
+import com.example.missiledefensesystem.viewmodel.Interceptor
+
+class FriendlyMissile(private val source: Interceptor, private val target: EnemyMissile,
+                      private val targetX: Double, private val targetY: Double, private val time: Int) {
     private var locX = -1.00
     private var locY = -1.00
     private val vel = 8.40
@@ -12,27 +15,19 @@ class FriendlyMissile(private val source: Interceptor, private val target: Enemy
         locX = source.getLocX() + source.getWidth()/2
         locY = 600.0 - source.getHeight()
 
-        val distX = target.getLocX() - locX
-        val distY = locY - target.getLocY()
-        val dist = Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0))
-        velX = vel * distX / dist
-        velY = vel * distY / dist
+        velX = (targetX - locX) / time
+        velY = (targetY - locY) / time
     }
 
     fun tick() {
-        val distX = target.getLocX() - locX
-        val distY = locY - target.getLocY()
-        val dist = Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0))
-        velX = vel * distX / dist
-        velY = -1 * vel * distY / dist
-
         locX += velX
         locY += velY
-        //velY += accY
 
-        if (Math.sqrt(Math.pow(distX, 2.0) + Math.pow(distY, 2.0)) <= 5.0) {
+        val dist = Math.sqrt(Math.pow(locX - target.getLocX(), 2.0) + Math.pow(locY - target.getLocY(), 2.0))
+
+        if (dist <= 10.0) {
             source.hit(this, target)
-            target.reset()
+            target.destroy()
         }
     }
 
