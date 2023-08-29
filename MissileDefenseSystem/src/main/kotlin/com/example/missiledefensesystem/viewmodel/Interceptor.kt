@@ -53,7 +53,7 @@ class Interceptor () {
                 var targetX = readingUsed.x + velX * time
                 var targetY = readingUsed.y + velY * time + 0.5 * accel * Math.pow(1.0*time, 2.0)
                 if (targetX < locX + width + 100) {
-                    time = time *3/4
+                    time = time * 2/3
                     targetX = readingUsed.x + velX * time
                     targetY = readingUsed.y + velY * time + 0.5 * accel * Math.pow(1.0*time, 2.0)
                 }
